@@ -38,11 +38,11 @@ public class JobProfileDetailsEntity implements Serializable {
 	@JoinColumn(name="job_profile_id")
 	private JobProfileEntity jobProfileEntity;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="skill_id")
 	private SkillEntity skillEntity;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="weightage_id")
 	private WeightageEntity weightageEntity;
 	

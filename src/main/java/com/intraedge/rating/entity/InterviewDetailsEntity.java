@@ -38,15 +38,15 @@ public class InterviewDetailsEntity implements Serializable {
 	@JoinColumn(name="interview_id")
 	private InterviewEntity interviewEntity;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="skill_id")
 	private SkillEntity skillEntity;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="weightage_id")
 	private WeightageEntity weightageEntity;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="grade_id")
 	private GradeEntity gradeEntity;
 	

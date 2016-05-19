@@ -7,11 +7,15 @@ import java.util.Set;
 import com.intraedge.rating.dto.AuditInfo;
 import com.intraedge.rating.dto.Category;
 import com.intraedge.rating.dto.Grade;
+import com.intraedge.rating.dto.JobProfile;
+import com.intraedge.rating.dto.JobProfileDetails;
 import com.intraedge.rating.dto.Skill;
 import com.intraedge.rating.dto.Weightage;
 import com.intraedge.rating.entity.AuditEntity;
 import com.intraedge.rating.entity.CategoryEntity;
 import com.intraedge.rating.entity.GradeEntity;
+import com.intraedge.rating.entity.JobProfileDetailsEntity;
+import com.intraedge.rating.entity.JobProfileEntity;
 import com.intraedge.rating.entity.SkillEntity;
 import com.intraedge.rating.entity.WeightageEntity;
 
@@ -73,6 +77,44 @@ public class EntityBuilder {
 			weightageEntity.setValue(grade.getValue());
 			weightageEntity.setAuditEntity(buildAuditEntity(grade.getAuditInfo()));
 			return weightageEntity;
+		}
+		if(object instanceof JobProfile){
+			JobProfile jobProfile = (JobProfile)object;
+			
+			JobProfileEntity jobProfileEntity = new JobProfileEntity();
+			jobProfileEntity.setId(jobProfile.getId());
+			jobProfileEntity.setName(jobProfile.getName());
+			jobProfileEntity.setDescription(jobProfile.getDescription());
+			
+			Set<JobProfileDetails> jobProfileDetails = jobProfile.getJobProfileDetails();
+			Set<JobProfileDetailsEntity> jobProfileDetailsEntities = new HashSet<JobProfileDetailsEntity>();
+			
+			for(JobProfileDetails jobProfileDetail : jobProfileDetails){
+				JobProfileDetailsEntity jobProfileDetailsEntity = new JobProfileDetailsEntity();
+				
+				jobProfileDetailsEntity.setId(jobProfileDetail.getId());
+				jobProfileDetailsEntity.setSkillEntity((SkillEntity)build(jobProfileDetail.getSkill()));
+				jobProfileDetailsEntity.setWeightageEntity((WeightageEntity)build(jobProfileDetail.getWeightage()));			
+				jobProfileDetailsEntity.setAuditEntity(buildAuditEntity(jobProfileDetail.getAuditInfo()));
+				
+				jobProfileDetailsEntities.add(jobProfileDetailsEntity);
+			}
+			jobProfileEntity.setJobProfileDetails(jobProfileDetailsEntities);
+			jobProfileEntity.setAuditEntity(buildAuditEntity(jobProfile.getAuditInfo()));
+			
+			return jobProfileEntity;
+		}
+		if(object instanceof JobProfileDetails){
+			JobProfileDetails jobProfileDetails = (JobProfileDetails)object;
+			JobProfileDetailsEntity jobProfileDetailsEntity = new JobProfileDetailsEntity();
+			
+			jobProfileDetailsEntity.setId(jobProfileDetails.getId());
+			jobProfileDetailsEntity.setSkillEntity((SkillEntity)build(jobProfileDetails.getSkill()));
+			jobProfileDetailsEntity.setWeightageEntity((WeightageEntity)build(jobProfileDetails.getWeightage()));			
+			jobProfileDetailsEntity.setAuditEntity(buildAuditEntity(jobProfileDetails.getAuditInfo()));
+			
+			return jobProfileDetailsEntity;
+		
 		}
 		return null;
 	}
