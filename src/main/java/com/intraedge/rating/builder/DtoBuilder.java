@@ -6,13 +6,18 @@ import java.util.Set;
 import com.intraedge.rating.dto.AuditInfo;
 import com.intraedge.rating.dto.Category;
 import com.intraedge.rating.dto.Grade;
+import com.intraedge.rating.dto.Interview;
+import com.intraedge.rating.dto.InterviewDetails;
 import com.intraedge.rating.dto.JobProfile;
 import com.intraedge.rating.dto.JobProfileDetails;
 import com.intraedge.rating.dto.Skill;
+import com.intraedge.rating.dto.User;
 import com.intraedge.rating.dto.Weightage;
 import com.intraedge.rating.entity.AuditEntity;
 import com.intraedge.rating.entity.CategoryEntity;
 import com.intraedge.rating.entity.GradeEntity;
+import com.intraedge.rating.entity.InterviewDetailsEntity;
+import com.intraedge.rating.entity.InterviewEntity;
 import com.intraedge.rating.entity.JobProfileDetailsEntity;
 import com.intraedge.rating.entity.JobProfileEntity;
 import com.intraedge.rating.entity.SkillEntity;
@@ -79,6 +84,36 @@ public class DtoBuilder {
 			weightage.setValue(entity.getValue());
 			weightage.setAuditInfo(getAuditInfo(entity.getAuditEntity()));
 			return weightage;
+		}
+		if(object instanceof InterviewEntity)
+		{
+			InterviewEntity entity=(InterviewEntity)object;
+			Interview interview = new Interview();
+			interview.setId(entity.getId());
+			interview.setName(entity.getName());
+			interview.setPrivateComment(entity.getPrivateComment());
+			interview.setPublicComment(entity.getPublicComment());
+			interview.setScore(entity.getScore());
+			interview.setAudit(getAuditInfo(entity.getAuditEntity()));
+			interview.setUser((User) build(entity.getUserEntity()));
+			interview.setJobProfile((JobProfile)build(entity.getJobProfileEntity()));
+			
+			Set<InterviewDetailsEntity> interviewDetailsEntity=entity.getInterviewDetails();
+			Set<InterviewDetails> interviewDetails = new HashSet<>();
+			
+			for(InterviewDetailsEntity interviewDetailEntity:interviewDetailsEntity)
+			{
+				InterviewDetails interviewDetail = new InterviewDetails();
+				interviewDetail.setId(interviewDetailEntity.getId());
+				interviewDetail.setGrade((Grade) build(interviewDetailEntity.getGradeEntity()));
+				interviewDetail.setSkill((Skill) build(interviewDetailEntity.getSkillEntity()));
+				interviewDetail.setWeightage((Weightage) build(interviewDetailEntity.getWeightageEntity()));
+				interviewDetail.setAudit(getAuditInfo(interviewDetailEntity.getAuditEntity()));
+			}
+			
+			interview.setInterviewDetails(interviewDetails);
+			
+			return interview;
 		}
 		if(object instanceof JobProfileEntity){
 			JobProfileEntity jobProfileEntity = (JobProfileEntity)object;
