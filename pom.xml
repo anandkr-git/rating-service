@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>rating-services</name>
 	<properties>
-		<spring.version>4.1.1.RELEASE</spring.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
 		<jersey.version>1.19.1</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.data.version>1.6.2.RELEASE</spring.data.version>

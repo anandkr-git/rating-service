@@ -16,7 +16,7 @@ import com.intraedge.rating.dto.JobProfile;
 import com.intraedge.rating.dto.User;
 
 @XmlRootElement(name = "interview")
-@XmlType(propOrder = { "id", "name", "score", "privateComment", "publicComment", "jobProfile", "user", "interviewDetails", "audit" })
+@XmlType(propOrder = { "id", "name", "score", "privateComment", "publicComment", "jobProfile", "interviewer", "interviewee", "interviewDetails", "audit" })
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Interview {
 	
@@ -30,8 +30,11 @@ public class Interview {
 		@XmlElement (name = "jobProfile")
 		private JobProfile jobProfile;
 
-		@XmlElement (name = "user")
-		private User user;
+		@XmlElement (name = "interviewer")
+		private User interviewer;
+		
+		@XmlElement (name = "interviewee")
+		private User interviewee;
 
 		@XmlElementWrapper(name="interviewDetails")
 		@XmlElement(name="interviewDetail")
@@ -88,12 +91,20 @@ public class Interview {
 			this.jobProfile = jobProfile;
 		}
 
-		public User getUser() {
-			return user;
+		public User getInterviewer() {
+			return interviewer;
 		}
 
-		public void setUser(User user) {
-			this.user = user;
+		public void setInterviewer(User interviewer) {
+			this.interviewer = interviewer;
+		}
+
+		public User getInterviewee() {
+			return interviewee;
+		}
+
+		public void setInterviewee(User interviewee) {
+			this.interviewee = interviewee;
 		}
 
 		public Set<InterviewDetails> getInterviewDetails() {

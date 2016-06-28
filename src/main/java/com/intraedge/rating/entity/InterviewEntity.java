@@ -55,8 +55,12 @@ public class InterviewEntity implements Serializable {
 	private JobProfileEntity jobProfileEntity;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private UserEntity userEntity;
+	@JoinColumn(name="interviewer_id")
+	private UserEntity interviewer;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="interviewee_id")
+	private UserEntity interviewee;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true) 
 	@JoinColumn(name="interview_id")
@@ -112,15 +116,23 @@ public class InterviewEntity implements Serializable {
 	public void setJobProfileEntity(JobProfileEntity jobProfileEntity) {
 		this.jobProfileEntity = jobProfileEntity;
 	}
-
-	public UserEntity getUserEntity() {
-		return userEntity;
+	
+	public UserEntity getInterviewer() {
+		return interviewer;
 	}
 
-	public void setUserEntity(UserEntity userEntity) {
-		this.userEntity = userEntity;
+	public void setInterviewer(UserEntity interviewer) {
+		this.interviewer = interviewer;
 	}
 
+	public UserEntity getInterviewee() {
+		return interviewee;
+	}
+
+	public void setInterviewee(UserEntity interviewee) {
+		this.interviewee = interviewee;
+	}
+	
 	public Set<InterviewDetailsEntity> getInterviewDetails() {
 		return interviewDetails;
 	}

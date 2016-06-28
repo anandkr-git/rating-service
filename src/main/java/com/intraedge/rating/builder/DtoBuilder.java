@@ -10,6 +10,7 @@ import com.intraedge.rating.dto.Interview;
 import com.intraedge.rating.dto.InterviewDetails;
 import com.intraedge.rating.dto.JobProfile;
 import com.intraedge.rating.dto.JobProfileDetails;
+import com.intraedge.rating.dto.Role;
 import com.intraedge.rating.dto.Skill;
 import com.intraedge.rating.dto.User;
 import com.intraedge.rating.dto.Weightage;
@@ -20,6 +21,7 @@ import com.intraedge.rating.entity.InterviewDetailsEntity;
 import com.intraedge.rating.entity.InterviewEntity;
 import com.intraedge.rating.entity.JobProfileDetailsEntity;
 import com.intraedge.rating.entity.JobProfileEntity;
+import com.intraedge.rating.entity.RoleEntity;
 import com.intraedge.rating.entity.SkillEntity;
 import com.intraedge.rating.entity.WeightageEntity;
 
@@ -75,6 +77,15 @@ public class DtoBuilder {
 			grade.setAuditInfo(getAuditInfo(entity.getAuditEntity()));
 			return grade;
 		}
+		if(object instanceof RoleEntity){
+			RoleEntity entity = (RoleEntity)object;
+			Role role = new Role();
+			role.setId(entity.getId());
+			role.setName(entity.getName());
+			role.setDescription(entity.getDescription());
+			role.setAuditInfo(getAuditInfo(entity.getAuditEntity()));
+			return role;
+		}
 		if(object instanceof WeightageEntity){
 			WeightageEntity entity = (WeightageEntity)object;
 			Weightage weightage = new Weightage();
@@ -95,7 +106,8 @@ public class DtoBuilder {
 			interview.setPublicComment(entity.getPublicComment());
 			interview.setScore(entity.getScore());
 			interview.setAudit(getAuditInfo(entity.getAuditEntity()));
-			interview.setUser((User) build(entity.getUserEntity()));
+			interview.setInterviewer(((User) build(entity.getInterviewer())));
+			interview.setInterviewee(((User) build(entity.getInterviewee())));
 			interview.setJobProfile((JobProfile)build(entity.getJobProfileEntity()));
 			
 			Set<InterviewDetailsEntity> interviewDetailsEntity=entity.getInterviewDetails();

@@ -11,6 +11,7 @@ import com.intraedge.rating.dto.Interview;
 import com.intraedge.rating.dto.InterviewDetails;
 import com.intraedge.rating.dto.JobProfile;
 import com.intraedge.rating.dto.JobProfileDetails;
+import com.intraedge.rating.dto.Role;
 import com.intraedge.rating.dto.Skill;
 import com.intraedge.rating.dto.Weightage;
 import com.intraedge.rating.entity.AuditEntity;
@@ -20,6 +21,7 @@ import com.intraedge.rating.entity.InterviewDetailsEntity;
 import com.intraedge.rating.entity.InterviewEntity;
 import com.intraedge.rating.entity.JobProfileDetailsEntity;
 import com.intraedge.rating.entity.JobProfileEntity;
+import com.intraedge.rating.entity.RoleEntity;
 import com.intraedge.rating.entity.SkillEntity;
 import com.intraedge.rating.entity.UserEntity;
 import com.intraedge.rating.entity.WeightageEntity;
@@ -73,6 +75,15 @@ public class EntityBuilder {
 			gradeEntity.setAuditEntity(buildAuditEntity(grade.getAuditInfo()));
 			return gradeEntity;
 		}
+		if(object instanceof Role){
+			Role role = (Role)object;
+			RoleEntity roleEntity = new RoleEntity();
+			roleEntity.setId(role.getId());
+			roleEntity.setName(role.getName());
+			roleEntity.setDescription(role.getDescription());
+			roleEntity.setAuditEntity(buildAuditEntity(role.getAuditInfo()));
+			return roleEntity;
+		}
 		if(object instanceof Weightage){
 			Weightage grade = (Weightage)object;
 			WeightageEntity weightageEntity = new WeightageEntity();
@@ -94,7 +105,8 @@ public class EntityBuilder {
 			interviewEntity.setPublicComment(interview.getPublicComment());
 			interviewEntity.setScore(interview.getScore());
 			interviewEntity.setAuditEntity(buildAuditEntity(interview.getAudit()));
-			interviewEntity.setUserEntity((UserEntity) build(interview.getUser()));
+			interviewEntity.setInterviewer((UserEntity) build(interview.getInterviewer()));
+			interviewEntity.setInterviewee((UserEntity) build(interview.getInterviewee()));
 			interviewEntity.setJobProfileEntity((JobProfileEntity)build(interview.getJobProfile()));
 			
 			
